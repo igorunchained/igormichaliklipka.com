@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Vincere Portfolios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff; --fg: #000000; --muted: #6b6b6b; --line: #000000; --faint: #e6e6e6;
+  --link: #313672; --hl: #313672; --hl-fg: #ffffff; --brand: #313672; --ok: #0a7d32; --warn: #b35c00;
+  --font: "JetBrains Mono", ui-monospace, monospace;
+}
+[data-theme="dark"] {
+  --bg: #000000; --fg: #ffffff; --muted: #9a9a9a; --line: #ffffff; --faint: #262626;
+  --link: #8f97e6; --hl: #3d4494; --brand: #4a52b0; --ok: #3ddc84; --warn: #ffb04a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+html { background: var(--bg); }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font);
+  font-size: 15px; line-height: 1.35; letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased; text-transform: uppercase;
+  padding: 3rem 1rem 4rem; display: flex; justify-content: center;
+}
+.wrap { width: 100%; max-width: 760px; }
+a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { opacity: .7; }
+button { font: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; cursor: pointer; }
+.btn-link { background: none; border: 0; text-decoration: underline; text-underline-offset: 3px; padding: 0; }
+.hl { background: var(--hl); color: var(--hl-fg); padding: .1em .35em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.muted { color: var(--muted); }
+h1 { font-size: 15px; font-weight: 700; }
+h2 { font-size: 15px; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; margin: 2.5rem 0 1rem; }
+section > p { margin-bottom: .4rem; }
+
+/* lock */
+#lock { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+.logo { display: block; aspect-ratio: 1083 / 1114; background: var(--fg);
+  -webkit-mask: url(logo.png) center / contain no-repeat; mask: url(logo.png) center / contain no-repeat; }
+#lock .logo { width: 96px; margin-bottom: .75rem; }
+header .brandline { display: flex; align-items: center; gap: .9rem; }
+header .logo { width: 44px; }
+#lock form { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; }
+#lock input {
+  font: inherit; color: var(--fg); background: transparent; border: 0; border-bottom: 1px solid var(--line);
+  padding: .35rem 0; width: min(320px, 100%); outline: none; letter-spacing: .05em;
+}
+#lock input:focus { border-bottom-width: 2px; }
+.btn { background: var(--brand); color: #fff; border: 0; padding: .45rem .9rem; }
+.btn:hover { opacity: .8; }
+#err { color: var(--warn); min-height: 1.3em; }
+
+/* header */
+header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: .5rem; }
+
+/* cycle */
+.big { font-size: clamp(40px, 9vw, 72px); font-weight: 700; letter-spacing: -0.05em; line-height: 1; margin: .5rem 0 .25rem; }
+.big small { font-size: .35em; font-weight: 500; letter-spacing: -0.02em; }
+.slots { display: grid; grid-template-columns: repeat(20, 1fr); gap: 3px; margin: 1rem 0 .6rem; }
+.slots.over { grid-template-columns: repeat(var(--n), 1fr); }
+.slot { height: 22px; border: 1px solid var(--line); }
+.slot.done { background: var(--fg); }
+.slot.wip { background: repeating-linear-gradient(135deg, var(--fg) 0 2px, transparent 2px 6px); }
+.slot.extra { border-style: dashed; }
+.legend { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 12px; }
+.legend i { display: inline-block; width: 11px; height: 11px; border: 1px solid var(--line); margin-right: .4rem; vertical-align: -1px; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 1.25rem; }
+.stats div { padding: .7rem .6rem .7rem 0; }
+.stats div + div { padding-left: .6rem; border-left: 1px solid var(--faint); }
+.stats b { display: block; font-size: 24px; letter-spacing: -0.04em; }
+.stats span { font-size: 11px; color: var(--muted); }
+
+/* ad rows */
+.rows { border-top: 1px solid var(--line); }
+.row { display: grid; grid-template-columns: 3.2rem 1fr auto; gap: .25rem 1rem; padding: .75rem 0; border-bottom: 1px solid var(--faint); align-items: baseline; }
+.row .num { font-weight: 700; }
+.row .meta { grid-column: 2; font-size: 12px; color: var(--muted); }
+.row .right { text-align: right; white-space: nowrap; }
+.steps { grid-column: 2 / 4; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin-top: .35rem; }
+.steps span { font-size: 10px; padding-top: 5px; border-top: 3px solid var(--faint); color: var(--muted); }
+.steps span.on { border-top-color: var(--fg); color: var(--fg); }
+.steps span.now { color: var(--fg); font-weight: 700; }
+.tag { font-size: 11px; border: 1px solid var(--line); padding: .05rem .35rem; margin-left: .35rem; }
+.empty { padding: .9rem 0; color: var(--muted); border-bottom: 1px solid var(--faint); }
+
+details { border-bottom: 1px solid var(--faint); }
+details summary { cursor: pointer; padding: .75rem 0; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+details summary::-webkit-details-marker { display: none; }
+details summary span.muted { margin-left: auto; }
+details summary { justify-content: flex-start; }
+details summary::after { content: "[+]"; }
+details[open] summary::after { content: "[-]"; }
+details .rows { border-top: 1px solid var(--faint); margin-bottom: .5rem; }
+
+/* billing */
+.inv { display: grid; grid-template-columns: 7rem 1fr auto auto; gap: 1rem; padding: .75rem 0; border-bottom: 1px solid var(--faint); align-items: baseline; }
+.st { font-size: 11px; padding: .1rem .4rem; border: 1px solid currentColor; }
+.st.paid { color: var(--ok); }
+.st.sent, .st.due { color: var(--warn); }
+.st.overdue { background: var(--warn); color: var(--bg); border-color: var(--warn); }
+.cta { display: inline-block; margin-top: 1.25rem; background: var(--brand); color: #fff; text-decoration: none; padding: .6rem 1rem; }
+.cta:hover { opacity: .8; }
+ul.terms { list-style: none; }
+ul.terms li { padding: .35rem 0 .35rem 1.2rem; position: relative; }
+ul.terms li::before { content: "—"; position: absolute; left: 0; }
+footer { margin-top: 3rem; display: flex; gap: 1.5rem; font-size: 12px; }
+.note { margin-top: 1.5rem; padding: .75rem 1rem; border: 1px solid var(--line); }
+
+@media (max-width: 600px) {
+  body { font-size: 12px; padding: 1.5rem 16px 3rem; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stats div:nth-child(3) { padding-left: 0; border-left: 0; }
+  .stats div:nth-child(n+3) { border-top: 1px solid var(--faint); }
+  .row { grid-template-columns: 2.4rem 1fr; }
+  .row .right { grid-column: 2; text-align: left; }
+  .steps { grid-column: 1 / 3; }
+  .steps span { font-size: 8.5px; }
+  .inv { grid-template-columns: 1fr auto; gap: .2rem 1rem; }
+  .inv .d { grid-column: 1 / 3; color: var(--muted); }
+  .slot { height: 16px; }
+  .slots { gap: 2px; }
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div id="lock">
+    <span class="logo" role="img" aria-label="Vincere"></span>
+    <h1>VINCERE PORTFOLIOS &times; IGOR</h1>
+    <p class="muted">CLIENT ROOM. ENTER THE PASSWORD YOU WERE GIVEN.</p>
+    <form id="f" autocomplete="on">
+      <input type="text" name="username" value="vincere" autocomplete="username" hidden>
+      <input id="pw" type="password" autocomplete="current-password" placeholder="PASSWORD" aria-label="Password" required>
+      <button class="btn" type="submit">ENTER</button>
+    </form>
+    <p id="err" role="alert"></p>
+  </div>
+  <div id="app" hidden></div>
+  <footer>
+    <button id="theme" class="btn-link" type="button">[DARK MODE]</button>
+    <button id="logout" class="btn-link" type="button" hidden>[LOCK]</button>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const KEY = "vincere.key.v1";
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+    del(k) { try { localStorage.removeItem(k); } catch {} },
+  };
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const toB64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  /* theme */
+  const setTheme = t => { document.documentElement.dataset.theme = t; $("#theme").textContent = t === "dark" ? "[LIGHT MODE]" : "[DARK MODE]"; store.set("vincere.theme", t); };
+  setTheme(store.get("vincere.theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+  $("#theme").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+
+  /* crypto */
+  let blob;
+  const loadBlob = async () => {
+    const r = await fetch("data.enc.json?t=" + Date.now(), { cache: "no-store" });
+    if (!r.ok) throw new Error("no data");
+    return r.json();
+  };
+  const derive = async (pw, b) => {
+    const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+    return crypto.subtle.deriveKey({ name: "PBKDF2", salt: b64(b.salt), iterations: b.iter, hash: "SHA-256" },
+      base, { name: "AES-GCM", length: 256 }, true, ["decrypt"]);
+  };
+  const decrypt = async (key, b) => {
+    const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(b.iv) }, key, b64(b.ct));
+    return JSON.parse(new TextDecoder().decode(pt));
+  };
+  const remember = async (key, b) => store.set(KEY, JSON.stringify({ salt: b.salt, k: toB64(await crypto.subtle.exportKey("raw", key)) }));
+
+  const tryStored = async () => {
+    const raw = store.get(KEY); if (!raw) return null;
+    try {
+      const s = JSON.parse(raw); if (s.salt !== blob.salt) return null;
+      const key = await crypto.subtle.importKey("raw", b64(s.k), "AES-GCM", false, ["decrypt"]);
+      return await decrypt(key, blob);
+    } catch { return null; }
+  };
+
+  $("#f").onsubmit = async e => {
+    e.preventDefault();
+    $("#err").textContent = "CHECKING…";
+    try {
+      const key = await derive($("#pw").value.trim(), blob);
+      const data = await decrypt(key, blob);
+      await remember(key, blob);
+      $("#err").textContent = "";
+      show(data);
+    } catch { $("#err").textContent = "WRONG PASSWORD."; }
+  };
+  $("#logout").onclick = () => { store.del(KEY); location.reload(); };
+
+  /* render */
+  const MONTHS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  const d = iso => { if (!iso) return "—"; const [y, m, dd] = iso.split("-").map(Number); return `${dd} ${MONTHS[m-1]} ${y}`; };
+  const dShort = iso => { if (!iso) return "—"; const [, m, dd] = iso.split("-").map(Number); return `${dd} ${MONTHS[m-1]}`; };
+  const money = n => "$" + Number(n).toLocaleString("en-US");
+  const today = () => { const t = new Date(); return new Date(t.getFullYear(), t.getMonth(), t.getDate()); };
+  const asDate = iso => { const [y, m, dd] = iso.split("-").map(Number); return new Date(y, m-1, dd); };
+  const STEPS = [["received","RECEIVED"],["editing","EDITING"],["review","IN REVIEW"],["delivered","DELIVERED"]];
+  const stepIdx = s => s === "changes" ? 2 : STEPS.findIndex(x => x[0] === s);
+  const STATUS_LABEL = { received: "RECEIVED", editing: "EDITING", review: "IN REVIEW", changes: "MAKING CHANGES", delivered: "DELIVERED" };
+
+  const adRow = (a, withSteps) => {
+    const i = stepIdx(a.status);
+    const right = a.status === "delivered"
+      ? (a.link ? `<a href="${esc(a.link)}" target="_blank" rel="noopener">WATCH</a> · ` : "") + dShort(a.delivered)
+      : `<span class="hl">${STATUS_LABEL[a.status] || esc(a.status)}</span>`;
+    const steps = withSteps ? `<div class="steps">${STEPS.map(([k, l], j) =>
+      `<span class="${j <= i ? "on" : ""} ${j === i ? "now" : ""}">${j === i && a.status === "changes" ? "CHANGES" : l}</span>`).join("")}</div>` : "";
+    return `<div class="row">
+      <span class="num">${esc(a.n)}</span>
+      <span>${esc(a.title)}<span class="tag">${esc(a.format)}</span></span>
+      <span class="right">${right}</span>
+      <span class="meta">${esc(a.versions || "")}${a.received ? " · RECEIVED " + dShort(a.received) : ""}${a.note ? " · " + esc(a.note) : ""}</span>
+      ${steps}
+    </div>`;
+  };
+
+  function show(D) {
+    $("#lock").hidden = true; $("#app").hidden = false; $("#logout").hidden = false;
+    const t = today();
+    const cyc = D.cycles.find(c => asDate(c.start) <= t && t <= asDate(c.end)) || D.cycles[D.cycles.length - 1];
+    const inCyc = D.ads.filter(a => a.cycle === cyc.id);
+    const done = inCyc.filter(a => a.status === "delivered").length;
+    const wip = inCyc.length - done;
+    const allowance = D.plan.included + (cyc.carryIn || 0);
+    const left = Math.max(0, allowance - inCyc.length);
+    const over = Math.max(0, done - allowance);
+    const daysLeft = Math.max(0, Math.round((asDate(cyc.end) - t) / 864e5) + 1);
+    const total = Math.max(allowance, inCyc.length);
+    const order = inCyc.slice().sort((a, b) => (a.status === "delivered" ? 0 : 1) - (b.status === "delivered" ? 0 : 1));
+    const slots = Array.from({ length: total }, (_, i) => {
+      const a = order[i];
+      const cls = a ? (a.status === "delivered" ? "done" : "wip") : "";
+      return `<div class="slot ${cls} ${i >= allowance ? "extra" : ""}" title="${a ? esc(a.n + " " + a.title) : "OPEN"}"></div>`;
+    }).join("");
+
+    const ads = D.ads.filter(a => a.cycle);
+    const active = ads.filter(a => a.status !== "delivered");
+    const delivered = ads.filter(a => a.status === "delivered");
+    const groups = [];
+    D.cycles.slice().reverse().forEach(c => {
+      const list = delivered.filter(a => a.cycle === c.id);
+      groups.push({ title: `CYCLE ${esc(c.id.replace(/^C/, ""))} · ${dShort(c.start)} – ${dShort(c.end)}`, list, open: c.id === cyc.id });
+    });
+
+    const B = D.billing || {};
+    const invRows = (B.invoices || []).map(v => `<div class="inv">
+        <span class="d">${d(v.date)}</span>
+        <span>${esc(v.label)}</span>
+        <span>${money(v.amount)}</span>
+        <span>${v.url ? `<a href="${esc(v.url)}" target="_blank" rel="noopener" class="st ${esc(v.status)}">${esc(v.status).toUpperCase()} ↗</a>` : `<span class="st ${esc(v.status)}">${esc(v.status).toUpperCase()}</span>`}</span>
+      </div>`).join("");
+
+    $("#app").innerHTML = `
+      <header>
+        <div class="brandline"><span class="logo" role="img" aria-label="Vincere"></span><h1>VINCERE PORTFOLIOS &times; IGOR</h1></div>
+        <span class="muted">UPDATED ${d(D.updated)}</span>
+      </header>
+      ${D.note ? `<div class="note">${esc(D.note)}</div>` : ""}
+
+      <section>
+        <h2>THIS CYCLE:</h2>
+        <p>${d(cyc.start)} – ${d(cyc.end)} · <span class="hl">${daysLeft} DAYS LEFT</span></p>
+        <div class="big">${done}<small> / ${allowance} ADS DELIVERED</small></div>
+        <div class="slots ${total > 20 ? "over" : ""}" style="--n:${total}">${slots}</div>
+        <div class="legend">
+          <span><i style="background:var(--fg)"></i>DELIVERED</span>
+          <span><i style="background:repeating-linear-gradient(135deg,var(--fg) 0 2px,transparent 2px 5px)"></i>IN PROGRESS</span>
+          <span><i></i>OPEN</span>
+        </div>
+        <div class="stats">
+          <div><b>${done}</b><span>DELIVERED</span></div>
+          <div><b>${wip}</b><span>IN PROGRESS</span></div>
+          <div><b>${left}</b><span>STILL AVAILABLE</span></div>
+          <div><b>${cyc.carryIn || 0}</b><span>CARRIED OVER</span></div>
+        </div>
+        ${over ? `<p style="margin-top:.75rem">${over} AD${over > 1 ? "S" : ""} OVER THE MINIMUM THIS CYCLE · ${money(over * D.plan.overPerAd)} ON THE NEXT INVOICE</p>` : ""}
+      </section>
+
+      <section>
+        <h2>IN PROGRESS (${active.length}):</h2>
+        <div class="rows">${active.length ? active.map(a => adRow(a, true)).join("") : `<div class="empty">NOTHING IN THE QUEUE. SEND THE NEXT TAKES ANY TIME.</div>`}</div>
+      </section>
+
+      <section>
+        <h2>DELIVERED (${delivered.length}):</h2>
+        ${groups.map(g => `<details ${g.open ? "open" : ""}><summary><span>${g.title}</span><span class="muted">${g.list.length} ADS</span></summary>
+          <div class="rows">${g.list.length ? g.list.map(a => adRow(a, false)).join("") : `<div class="empty">NONE YET THIS CYCLE.</div>`}</div></details>`).join("")}
+      </section>
+
+      <section>
+        <h2>BILLING:</h2>
+        <p>${esc(D.plan.name)}: ${money(D.plan.price)} / MONTH · ${D.plan.included} ADS</p>
+        ${B.nextInvoice ? `<p>NEXT INVOICE: <span class="hl">${d(B.nextInvoice.date)}</span> · ${money(B.nextInvoice.amount)}${over ? " + " + money(over * D.plan.overPerAd) : ""}</p>` : ""}
+        <div class="rows" style="margin-top:1rem">${invRows || `<div class="empty">NO INVOICES YET.</div>`}</div>
+        ${B.portal ? `<a class="cta" href="${esc(B.portal)}" target="_blank" rel="noopener">MANAGE CARD &amp; INVOICES ↗</a>` : ""}
+      </section>
+
+      <section>
+        <h2>TERMS:</h2>
+        <ul class="terms">${(D.plan.terms || []).map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      </section>`;
+  }
+
+  (async () => {
+    try { blob = await loadBlob(); }
+    catch { $("#err").textContent = "COULD NOT LOAD. REFRESH THE PAGE."; return; }
+    const data = await tryStored();
+    if (data) show(data); else $("#pw").focus();
+  })();
+})();
+</script>
+</body>
+</html>
