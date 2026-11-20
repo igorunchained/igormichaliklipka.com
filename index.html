@@ -4,254 +4,222 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hi, I'm Igor</title>
-    <meta name="description" content="Personal website of Igor">
+    <meta name="description" content="Igor Michalik-Lipka. Co-founder at Vetted, VFX artist for Decoded Genius. Warsaw.">
 
-    <!-- Open Graph / Twitter Meta Tags -->
-    <meta property="og:title" content="IGOR">
-    <meta property="og:description" content="Personal website for Igor.">
+    <meta property="og:title" content="IGOR MICHALIK-LIPKA">
+    <meta property="og:description" content="Co-founder at Vetted. VFX artist for Decoded Genius. Warsaw.">
     <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="IGOR">
-    <meta name="twitter:description" content="Personal website for Igor.">
+    <meta property="og:url" content="https://igormichaliklipka.com/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="IGOR MICHALIK-LIPKA">
+    <meta name="twitter:description" content="Co-founder at Vetted. VFX artist for Decoded Genius. Warsaw.">
 
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
+
     <style>
         :root {
-            --bg-color: #ffffff;
-            --text-color: #000000;
-            --link-color: #0000EE;
-            --highlight-color: #FFF200;
-            --font-primary: "JetBrains Mono", monospace;
-            --spacing-unit: 1.5rem;
-            --content-width: 740px;
+            --bg: #ffffff;
+            --fg: #000000;
+            --mute: #6b6b6b;
+            --line: #e6e6e6;
+            --link: #0000EE;
+            --font: "JetBrains Mono", ui-monospace, monospace;
+            --size: 17px;
         }
-
         [data-theme="dark"] {
-            --bg-color: #000000;
-            --text-color: #ffffff;
-            --link-color: #58a6ff;
+            --bg: #000000;
+            --fg: #ffffff;
+            --mute: #8a8a8a;
+            --line: #222222;
+            --link: #58a6ff;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
+        html { background: var(--bg); -webkit-text-size-adjust: 100%; }
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-primary);
-            font-size: 19px;
-            line-height: 1.25;
+            background: var(--bg);
+            color: var(--fg);
+            font-family: var(--font);
+            font-size: var(--size);
+            line-height: 1.45;
             letter-spacing: -0.02em;
-            -webkit-font-smoothing: antialiased;
-            padding: 2rem;
             text-transform: uppercase;
-            display: flex;
-            justify-content: center;
-            transition: background-color 0.2s ease, color 0.2s ease;
+            -webkit-font-smoothing: antialiased;
+            padding: 64px 24px 48px;
+            transition: background-color .2s ease, color .2s ease;
         }
 
-        p, li, h1, h2 {
-            line-height: 1.25 !important;
-            margin-bottom: 0.75rem !important;
-        }
-
-        h1, h2 {
-            margin-top: 1.5rem;
-        }
-
-        h1:first-child, h2:first-child {
-            margin-top: 0;
-        }
-
-        .container {
-            width: 100%;
-            max-width: var(--content-width);
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            padding-top: 4rem;
-        }
-
-        h1 {
-            font-size: 19px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
+        main { max-width: 760px; margin: 0 auto; }
 
         a {
-            color: var(--link-color);
+            color: var(--link);
             text-decoration: underline;
             text-underline-offset: 3px;
             text-decoration-thickness: 1px;
-            transition: opacity 0.2s ease;
         }
+        a:hover { opacity: .7; }
+        .rows a { white-space: nowrap; }
 
-        a:hover {
-            opacity: 0.7;
-        }
+        section + section { margin-top: 40px; }
 
-        .highlight-wrapper {
-            font-size: 19px;
-            margin-bottom: 1rem;
-        }
+        h1 { font-size: var(--size); font-weight: 700; }
+        .clock { color: var(--mute); font-variant-numeric: tabular-nums; }
 
-        .highlight {
-            background-color: var(--highlight-color);
-            padding: 0.2em 0.4em;
-            box-decoration-break: clone;
-            -webkit-box-decoration-break: clone;
-        }
+        .intro p + p { margin-top: 6px; }
 
-        .bio-section p { margin-bottom: 1rem; }
-        .social-section p { margin-bottom: 0.5rem; }
-
-        .recent-section h2,
-        .notable-section h2 {
-            font-size: 19px;
+        h2 {
+            font-size: var(--size);
             font-weight: 500;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
             text-decoration: underline;
             text-underline-offset: 4px;
+            margin-bottom: 16px;
         }
 
-        .project-list { list-style: none; }
-        .project-list li { margin-bottom: 0.75rem; }
-        .date { opacity: 1; }
-        .effort-list p { margin-bottom: 0.75rem; }
+        /* contact: whatsapp button + social icons */
+        .contact { display: flex; align-items: center; gap: 18px; margin-top: 20px; }
+        .btn { display: inline-block; padding: 10px 18px; background: var(--fg); color: var(--bg); text-decoration: none; font-weight: 700; border: 1px solid var(--fg); transition: background-color .15s, color .15s; }
+        .btn:hover { opacity: 1; background: var(--bg); color: var(--fg); }
+        .ico { display: inline-flex; color: var(--fg); }
+        .ico svg { width: 22px; height: 22px; }
 
-        @media (max-width: 768px) {
-            * {
-                font-size: 11px !important;
-                line-height: 1.25 !important;
-            }
-            h1, h2, p, li, span, a {
-                margin-bottom: 0.5rem !important;
-            }
-            h1 { font-weight: 700 !important; }
-            h2 {
-                font-weight: 500 !important;
-                text-decoration: underline !important;
-                margin-top: 1rem !important;
-            }
-            .container {
-                padding-top: 1.5rem !important;
-                gap: 0 !important;
-                max-width: 100% !important;
-                margin: 0 auto !important;
-            }
-            body { padding: 1rem !important; }
+        /* timeline: dates in their own column so everything lines up */
+        .rows { list-style: none; }
+        .rows li {
+            display: grid;
+            grid-template-columns: 192px 1fr;
+            column-gap: 16px;
+            padding: 9px 0;
+            border-top: 1px solid var(--line);
+        }
+        .rows li:last-child { border-bottom: 1px solid var(--line); }
+        .date { color: var(--mute); font-variant-numeric: tabular-nums; white-space: nowrap; }
+        .rows li { transition: background-color .15s; }
+        .rows li:hover .date { color: var(--fg); }
+        .now { color: var(--fg); }
+        .role { font-weight: 700; }
+
+        
+
+        /* latest work: clickable thumbnails */
+        .work { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .thumb { display: block; color: var(--fg); text-decoration: none; }
+        .thumb:hover { opacity: 1; }
+        .thumb .img { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--line); background: #000; }
+        .thumb img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+        .thumb:hover img { transform: scale(1.03); }
+        .thumb .play { position: absolute; left: 12px; bottom: 12px; background: #000; color: #fff; font-size: 16px; font-weight: 700; padding: 7px 11px; line-height: 1; }
+        .thumb .cap { display: block; margin-top: 10px; font-size: 14px; }
+        .thumb:hover .cap { text-decoration: underline; text-underline-offset: 3px; }
+
+        footer { max-width: 760px; margin: 48px auto 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+        #theme-toggle {
+            background: none; border: 0; padding: 0; cursor: pointer;
+            font: inherit; color: inherit; text-transform: uppercase; letter-spacing: inherit;
+            text-decoration: underline; text-underline-offset: 3px;
+        }
+        .copy { color: var(--mute); }
+
+        /* phone: readable size, date sits above each role */
+        @media (max-width: 640px) {
+            :root { --size: 14px; }
+            .intro h1 { font-size: 18px; }
+            .intro .clock { font-size: 15px; }
+            body { padding: 32px 18px 32px; }
+            section + section { margin-top: 32px; }
+            .rows li { grid-template-columns: 1fr; row-gap: 2px; padding: 10px 0; }
+            .date { font-size: 12px; }
+            .work { grid-template-columns: 1fr; }
+            .thumb .cap { font-size: 12.5px; }
+            footer { flex-direction: column; gap: 8px; margin-top: 40px; }
         }
     </style>
 </head>
 <body>
-    <main class="container">
-        <header class="header-section" style="margin-bottom: 1.5rem;">
-            <h1>IGOR, <span id="age"></span>, WARSAW</h1>
-            <p id="clock-line"><span id="clock"></span></p>
-        </header>
-
-        <section class="bio-section" style="margin-bottom: 1.5rem;">
-            <p>CO-FOUNDER &amp; CGO @ <a href="https://www.vetted.cv/join" target="_blank">VETTED</a></p>
-        </section>
-
-        <section class="social-section" style="margin-bottom: 1.5rem;">
-            <p>
-                X: <a href="https://x.com/michaliklipka" target="_blank">@MICHALIKLIPKA</a>
-            </p>
-            <p>
-                TG: <a href="https://t.me/igormichaliklipka" target="_blank">@IGORMICHALIKLIPKA</a>
-            </p>
-        </section>
-
-        <section class="recent-section" style="margin-bottom: 1.5rem;">
-            <h2>TIMELINE:</h2>
-            <ul class="project-list">
-                <li><span class="date">JUN 2026-NOW</span> - <strong>(VFX ARTIST)</strong>: <a href="https://www.youtube.com/channel/UCUypvpIwu5S9eLTjUJlnKSA" target="_blank">DECODED GENIUS PODCAST</a></li>
-                <li><span class="date">APR 2026-NOW</span> - <strong>(CO-FOUNDER &amp; CGO)</strong>: <a href="https://www.vetted.cv/join" target="_blank">VETTED</a></li>
-                <li><span class="date">JUL 2025-APR 2026</span> - <strong>(CMO &amp; SENIOR VIDEO EDITOR)</strong>: <a href="https://buildmyagent.io/" target="_blank">BUILDMYAGENT</a></li>
-                <li><span class="date">APR 2025-APR 2026</span> - <strong>(HEAD OF CONTENT &amp; MARKETING)</strong>: <a href="https://www.youtube.com/@albertolgaard" target="_blank">ALBERT OLGAARD</a></li>
-                <li><span class="date">DEC 2022-MAR 2025</span> - <strong>(VIDEO EDITOR)</strong>: <a href="https://www.instagram.com/contenthqmiami" target="_blank">SHORT FORM TEAM / CONTENT HQ</a></li>
-            </ul>
-        </section>
-
-        <section class="notable-section" style="margin-bottom: 1.5rem;">
-            <h2>OTHER ENDEAVOURS:</h2>
-            <div class="effort-list">
-                <p>DESIGNED AND DEVELOPED THE ENTIRE FRONT-END FOR <a href="https://www.vetted.cv/join" target="_blank">VETTED</a></p>
-                <p>SCALED <a href="https://www.youtube.com/@albertolgaard" target="_blank">ALBERT OLGAARD</a>'S PERSONAL BRAND ACROSS INSTAGRAM &amp; YOUTUBE</p>
-                <p>GREW INSTAGRAM FROM 60K → 350K+ FOLLOWERS</p>
-                <p>GREW YOUTUBE FROM 0 → 50K+ SUBSCRIBERS</p>
-                <div style="margin-bottom: 1.5rem;"></div>
-                <p>BUILT THE PAID FUNNEL FOR <a href="https://www.skool.com/freegroup/about" target="_blank">AI AUTOMATION A-Z</a>, A 160K+ MEMBER FREE SKOOL COMMUNITY</p>
-                <p>CONVERTED IT INTO A PAID COMMUNITY, <a href="https://www.skool.com/top1percent/about" target="_blank">THE 1% IN AI</a></p>
-                <p>HIT 1,000+ PAID MEMBERS &amp; $70K MRR IN ~2 MONTHS</p>
+    <main>
+        <section class="intro">
+            <h1>IGOR MICHALIK-LIPKA, <span id="age"></span>, WARSAW</h1>
+            <p class="clock" id="clock">&nbsp;</p>
+            <div class="contact">
+                <a class="btn" href="https://wa.me/48453300732" target="_blank" rel="noopener">MESSAGE ME</a>
+                <a class="ico" href="https://x.com/michaliklipka" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg></a>
+                <a class="ico" href="https://www.instagram.com/igormichaliklipka/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
             </div>
         </section>
 
-        <footer>
-            <button id="theme-toggle" data-testid="button-theme-toggle" style="background: none; border: none; font-family: inherit; font-size: inherit; color: inherit; cursor: pointer; text-decoration: underline; text-transform: uppercase; padding: 0;">[DARK MODE]</button>
-        </footer>
+        <section>
+            <h2>TIMELINE:</h2>
+            <ul class="rows">
+                <li><span class="date">NOV 2026 – <span class="now">NOW</span></span><span><span class="role">LEAD EDITOR</span> · <a href="https://www.youtube.com/@louisanicola" target="_blank" rel="noopener">THE NEURO EXPERIENCE</a></span></li>
+                <li><span class="date">JUL 2026 – <span class="now">NOW</span></span><span><span class="role">VIDEO EDITOR</span> · <a href="https://www.vincereportfolios.com/" target="_blank" rel="noopener">VINCERE PORTFOLIOS</a></span></li>
+                <li><span class="date">JUN 2026 – <span class="now">NOW</span></span><span><span class="role">VFX ARTIST</span> · <a href="https://www.youtube.com/channel/UCUypvpIwu5S9eLTjUJlnKSA" target="_blank" rel="noopener">DECODED GENIUS PODCAST</a></span></li>
+                <li><span class="date">APR 2026 – <span class="now">NOW</span></span><span><span class="role">CO-FOUNDER</span> · <a href="https://www.vetted.cv/join" target="_blank" rel="noopener">VETTED</a></span></li>
+                <li><span class="date">JUL 2025 – APR 2026</span><span><span class="role">CMO</span> · <a href="https://buildmyagent.io/" target="_blank" rel="noopener">BUILDMYAGENT</a></span></li>
+                <li><span class="date">APR 2025 – APR 2026</span><span><span class="role">HEAD OF CONTENT</span> · <a href="https://www.youtube.com/@albertolgaard" target="_blank" rel="noopener">ALBERT OLGAARD</a> &amp; <a href="https://www.youtube.com/@ollirasmussen" target="_blank" rel="noopener">OLIVER RASMUSSEN</a></span></li>
+                <li><span class="date">DEC 2022 – MAR 2025</span><span><span class="role">VIDEO EDITOR</span> · <a href="https://www.instagram.com/contenthqmiami" target="_blank" rel="noopener">SHORT FORM TEAM / CONTENT HQ</a></span></li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>SELECTED WORK:</h2>
+            <div class="work">
+                <a class="thumb" href="https://www.youtube.com/watch?v=e5oIZEmvtUY" target="_blank" rel="noopener">
+                    <span class="img"><img src="assets/dg-robert-pape.jpg" alt="Robert Pape: Is World War 3 About To Begin?" loading="lazy" width="960" height="540"><span class="play">▶ 1.9M VIEWS</span></span>
+                    <span class="cap"><span class="role">VFX</span> · DECODED GENIUS × ROBERT PAPE ↗</span>
+                </a>
+                <a class="thumb" href="https://www.youtube.com/watch?v=FS_hLDTDI1w" target="_blank" rel="noopener">
+                    <span class="img"><img src="assets/dg-ai-conscious.jpg" alt="No, AI Isn't Conscious; It's Actually Much Worse" loading="lazy" width="960" height="540"><span class="play">▶ 3.4M VIEWS</span></span>
+                    <span class="cap"><span class="role">VFX</span> · DECODED GENIUS × AI SCIENTIST ↗</span>
+                </a>
+            </div>
+        </section>
     </main>
+
+    <footer>
+        <button id="theme-toggle" type="button">[DARK MODE]</button>
+        <span class="copy">© <span id="yr"></span> IGOR MICHALIK-LIPKA</span>
+    </footer>
+
     <script>
-        // Auto-calculate age from date of birth (23 Sep 2005)
+        // age from date of birth (23 Sep 2005)
         (function () {
-            const dob = new Date(2005, 8, 23); // month is 0-indexed: 8 = September
             const now = new Date();
-            let age = now.getFullYear() - dob.getFullYear();
-            const hadBirthday =
-                now.getMonth() > dob.getMonth() ||
-                (now.getMonth() === dob.getMonth() && now.getDate() >= dob.getDate());
-            if (!hadBirthday) age--;
+            let age = now.getFullYear() - 2005;
+            if (now.getMonth() < 8 || (now.getMonth() === 8 && now.getDate() < 23)) age--;
             document.getElementById('age').textContent = age;
+            document.getElementById('yr').textContent = now.getFullYear();
         })();
 
-        // Live current time in Warsaw
+        // live time in Warsaw
         (function () {
             const clock = document.getElementById('clock');
+            const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Warsaw', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            const off = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Warsaw', timeZoneName: 'shortOffset' });
             function tick() {
                 const now = new Date();
-                const time = new Intl.DateTimeFormat('en-GB', {
-                    timeZone: 'Europe/Warsaw',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: false
-                }).format(now);
-                const offset = new Intl.DateTimeFormat('en-GB', {
-                    timeZone: 'Europe/Warsaw',
-                    timeZoneName: 'shortOffset'
-                }).formatToParts(now).find(p => p.type === 'timeZoneName').value;
-                clock.textContent = offset + ' ' + time;
+                clock.textContent = off.formatToParts(now).find(p => p.type === 'timeZoneName').value + ' ' + fmt.format(now);
             }
             tick();
             setInterval(tick, 1000);
         })();
 
-        const toggle = document.getElementById('theme-toggle');
-        const body = document.body;
-
-        // Check for saved theme
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            body.setAttribute('data-theme', savedTheme);
-            toggle.textContent = savedTheme === 'dark' ? '[LIGHT MODE]' : '[DARK MODE]';
-        }
-
-        toggle.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            toggle.textContent = newTheme === 'dark' ? '[LIGHT MODE]' : '[DARK MODE]';
-        });
+        // theme toggle
+        (function () {
+            const root = document.documentElement;
+            const toggle = document.getElementById('theme-toggle');
+            const label = () => toggle.textContent = root.getAttribute('data-theme') === 'dark' ? '[LIGHT MODE]' : '[DARK MODE]';
+            label();
+            toggle.addEventListener('click', () => {
+                const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                root.setAttribute('data-theme', next);
+                label();
+            });
+        })();
     </script>
 </body>
 </html>

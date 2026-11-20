@@ -23,9 +23,9 @@
 html { background: var(--bg); }
 body {
   background: var(--bg); color: var(--fg); font-family: var(--font);
-  font-size: 15px; line-height: 1.35; letter-spacing: -0.02em;
+  font-size: 17px; line-height: 1.45; letter-spacing: -0.02em;
   -webkit-font-smoothing: antialiased; text-transform: uppercase;
-  padding: 3rem 1rem 4rem; display: flex; justify-content: center;
+  padding: 64px 24px 48px; display: flex; justify-content: center;
 }
 .wrap { width: 100%; max-width: 760px; }
 a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
@@ -34,8 +34,8 @@ button { font: inherit; color: inherit; text-transform: inherit; letter-spacing:
 .btn-link { background: none; border: 0; text-decoration: underline; text-underline-offset: 3px; padding: 0; }
 .hl { background: var(--hl); color: var(--hl-fg); padding: .1em .35em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .muted { color: var(--muted); }
-h1 { font-size: 15px; font-weight: 700; }
-h2 { font-size: 15px; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; margin: 2.5rem 0 1rem; }
+h1 { font-size: 17px; font-weight: 700; }
+h2 { font-size: 17px; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; margin: 2.5rem 0 1rem; }
 section > p { margin-bottom: .4rem; }
 
 /* lock */
@@ -108,11 +108,13 @@ details .rows { border-top: 1px solid var(--faint); margin-bottom: .5rem; }
 ul.terms { list-style: none; }
 ul.terms li { padding: .35rem 0 .35rem 1.2rem; position: relative; }
 ul.terms li::before { content: "—"; position: absolute; left: 0; }
-footer { margin-top: 3rem; display: flex; gap: 1.5rem; font-size: 12px; }
+footer { margin-top: 3rem; display: flex; gap: 1.5rem; font-size: 14px; }
 .note { margin-top: 1.5rem; padding: .75rem 1rem; border: 1px solid var(--line); }
 
 @media (max-width: 600px) {
-  body { font-size: 12px; padding: 1.5rem 16px 3rem; }
+  body { font-size: 14px; padding: 32px 18px 32px; }
+  h1, h2 { font-size: 14px; }
+  footer { font-size: 12px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .stats div:nth-child(3) { padding-left: 0; border-left: 0; }
   .stats div:nth-child(n+3) { border-top: 1px solid var(--faint); }
@@ -161,8 +163,9 @@ footer { margin-top: 3rem; display: flex; gap: 1.5rem; font-size: 12px; }
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   /* theme */
-  const setTheme = t => { document.documentElement.dataset.theme = t; $("#theme").textContent = t === "dark" ? "[LIGHT MODE]" : "[DARK MODE]"; store.set("vincere.theme", t); };
-  setTheme(store.get("vincere.theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+  // white is always the default; the toggle only lasts for this visit
+  const setTheme = t => { document.documentElement.dataset.theme = t; $("#theme").textContent = t === "dark" ? "[LIGHT MODE]" : "[DARK MODE]"; };
+  setTheme("light");
   $("#theme").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
 
   /* crypto */
