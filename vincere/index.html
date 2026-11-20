@@ -230,7 +230,7 @@ footer { margin-top: 3rem; display: flex; gap: 1.5rem; font-size: 14px; }
       <span class="num">${esc(a.n)}</span>
       <span>${esc(a.title)}<span class="tag">${esc(a.format)}</span></span>
       <span class="right">${right}</span>
-      <span class="meta">${esc(a.versions || "")}${a.received ? " · RECEIVED " + dShort(a.received) : ""}${a.note ? " · " + esc(a.note) : ""}</span>
+      <span class="meta">${esc(a.versions || "")}${(a.count || 1) > 1 ? " · COUNTS AS " + a.count + " ADS" : ""}${a.received ? " · RECEIVED " + dShort(a.received) : ""}${a.note ? " · " + esc(a.note) : ""}</span>
       ${steps}
     </div>`;
   };
@@ -240,14 +240,18 @@ footer { margin-top: 3rem; display: flex; gap: 1.5rem; font-size: 14px; }
     const t = today();
     const cyc = D.cycles.find(c => asDate(c.start) <= t && t <= asDate(c.end)) || D.cycles[D.cycles.length - 1];
     const inCyc = D.ads.filter(a => a.cycle === cyc.id);
-    const done = inCyc.filter(a => a.status === "delivered").length;
-    const wip = inCyc.length - done;
+    const w = (a) => a.count || 1;   // a long-form job can count as several retainer ads ("count": 2)
+    const sum = (l) => l.reduce((n, a) => n + w(a), 0);
+    const used = sum(inCyc);
+    const done = sum(inCyc.filter(a => a.status === "delivered"));
+    const wip = used - done;
     const allowance = D.plan.included + (cyc.carryIn || 0);
-    const left = Math.max(0, allowance - inCyc.length);
+    const left = Math.max(0, allowance - used);
     const over = Math.max(0, done - allowance);
     const daysLeft = Math.max(0, Math.round((asDate(cyc.end) - t) / 864e5) + 1);
-    const total = Math.max(allowance, inCyc.length);
-    const order = inCyc.slice().sort((a, b) => (a.status === "delivered" ? 0 : 1) - (b.status === "delivered" ? 0 : 1));
+    const total = Math.max(allowance, used);
+    const order = inCyc.slice().sort((a, b) => (a.status === "delivered" ? 0 : 1) - (b.status === "delivered" ? 0 : 1))
+      .flatMap(a => Array.from({ length: w(a) }, () => a));
     const slots = Array.from({ length: total }, (_, i) => {
       const a = order[i];
       const cls = a ? (a.status === "delivered" ? "done" : "wip") : "";
